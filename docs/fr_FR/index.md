@@ -18,7 +18,7 @@ Vous pouvez retrouver d'autres tutoriels sur mon blog : [www.ma-maison-intellige
 Installation
 ===
 
-######Installation avec Github
+#Installation avec Github
 Depuis mon [GitHub](https://github.com/flabadens/BMWConnectedDrive), cliquer sur cloner/téléchargez puis sélectionner le fichier .zip.
 Dans Jeedom, il vous faudra peut être activer les sources de type fichier dans la configuration. Vous pourrez ensuite ajoutez un plugin avec le type de source Fichier. L’ID logique du plugin doit être renseigné exactement BMWConnecteDrive. Puis cliquez sur le bouton "Envoyer un plugin" et sélectionnez le zip téléchargé précédemment.
 Cliquez sur "Enregistrer". Le plugin est maintenant installé.
@@ -41,7 +41,9 @@ Commandes disponibles
 
 Fonctionnalités à venir
 ===
-- Ajout des mesures d'Efficience
+*- Ajout des messages
+*- Ajout des mesures d'Efficience
+*- Ajout d'intéraction avec la voiture
 
 Changelog
 ===
