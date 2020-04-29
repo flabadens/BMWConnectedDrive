@@ -32,12 +32,16 @@ Il apparaitra ensuite dans le menu Plugins > Objets connectés.
 
 Vous pourrez ensuite ajouter un véhicule.
 Il vous faudra renseigner 3 paramètres particuliers nécessairesà la connection avec le service BMW ConnectedDrive:
-- VIN (Vehicle Identification Number)
-- Username
-- Password
+- VIN (Vehicle Identification Number) : Les 7 derniers caractères du numéro d'identification sont disponibles sur le site BMW ConnectedDrive. Le numéro complet que vous aurez besoin se trouve sur le certificat d'immatriculation (carte grise, champ E).
+- Username : identifiant pour accéder au site BMW ConnectedDrive
+- Password : Mot de passe pour accéder au site BMW ConnectedDrive
 
 Commandes disponibles
 ===
+
+Fonctionnalités à venir
+===
+- Ajout des mesures d'Efficience
 
 Changelog
 ===
