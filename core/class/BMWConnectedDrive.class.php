@@ -83,7 +83,7 @@ class BMWConnectedDrive extends eqLogic {
     $this->checkAndUpdateCmd('windowPassengerFront', $bmwCarInfo->attributesMap->window_passenger_front);
     $this->checkAndUpdateCmd('chargingStatus', $bmwCarInfo->attributesMap->charging_status);
     $this->checkAndUpdateCmd('lastUpdate', date('d/m/Y H:i:s'));
-    
+
     log::add('BMWConnectedDrive', 'debug', 'End of car refresh vin:'.$bmwVin.' with username:'.$bmwUsername);
   }
 
@@ -253,7 +253,7 @@ class BMWConnectedDrive extends eqLogic {
      $info = new BMWConnectedDriveCmd();
      $info->setName(__('Fenêtre Conducteur Avant', __FILE__));
     }
-    $info->setLogicalId('doorDriverRear');
+    $info->setLogicalId('windowDriverFront');
     $info->setEqLogic_id($this->getId());
     $info->setType('info');
     $info->setSubType('string');
