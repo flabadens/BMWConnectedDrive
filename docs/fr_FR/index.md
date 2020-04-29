@@ -6,7 +6,12 @@ lang: fr_FR
 Description
 ===
 
-Plugin permettant de récupérer les informations des voitures BMW équipées de ConnectedDrive.
+Plugin permettant de récupérer les informations des voitures BMW équipées des services ConnectedDrive.
+
+Voitures testées :
+-I3
+
+Si vous êtes propriétaires d'un autre véhicule et souhaitez tester le fonctionnement, n'hésitez pas à me contacter.
 
 Vous pouvez retrouver d'autres tutoriels sur mon blog : [www.ma-maison-intelligente.fr](http://www.ma-maison-intelligente.fr)
 
