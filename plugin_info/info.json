@@ -1,0 +1,14 @@
+{
+  "id" : "BMWConnectedDrive",
+  "name": "BMW Connected Drive",
+  "licence": "GPL",
+  "require": "3.0",
+  "version": "1.0",
+  "category": "devicecommunication",
+  "hasDependency": false,
+  "hasOwnDaemon": false,
+  "maxDependancyInstallTime": 0,
+  "documentation": "https://www.perdu.com",
+  "changelog": "https://www.perdu.com",
+  "author": "geqr"
+}
