@@ -1,11 +1,16 @@
 <?php
 
+/**
+A PHP Client for BMW Connected Drive API
+Origine: https://github.com/bluewalk/BMWConnecteDrive
+and modified by geqr (www.ma-maison-intelligente.fr)
+**/
+
 namespace net\bluewalk\connecteddrive;
 
 class ConnectedDrive
 {
   private $auth_url = 'https://customer.bmwgroup.com/gcdm/oauth/authenticate';
-  //private $api_url = 'https://www.bmw-connecteddrive.nl/api/vehicle';
   private $api_url = 'https://b2vapi.bmwgroup.com/api/vehicle';
   private $config = [
     'vin' => '',
