@@ -77,7 +77,7 @@ Fonctionnalités à venir
 
 Changelog
 ===
-En cours
+[ici](https://flabadens.github.io/BMWConnectedDrive/fr_FR/)
 
 Support
 ===
