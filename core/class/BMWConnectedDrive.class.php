@@ -324,7 +324,7 @@ class BMWConnectedDrive extends eqLogic {
     $refresh->save();
   }
 
-  public function toHtml($_version = 'dashboard') {
+  /*public function toHtml($_version = 'dashboard') {
         log::add('BMWConnectedDrive', 'debug', "Start rendering");
         $replace = $this->preToHtml($_version);
 
@@ -344,7 +344,7 @@ class BMWConnectedDrive extends eqLogic {
         //return $this->postToHtml($_version, template_replace($replace, getTemplate('core', $version, $templatename, 'geotrav')));
         return $html;
 
-  }
+  }*
 
         /*
         $temperature = $this->getCmd(null, 'temperature');
