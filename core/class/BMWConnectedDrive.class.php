@@ -324,24 +324,24 @@ class BMWConnectedDrive extends eqLogic {
     $refresh->save();
   }
 
+<<<<<<< HEAD
   /*public function toHtml($_version = 'dashboard') {
         log::add('BMWConnectedDrive', 'debug', "Start rendering");
+=======
+  public function toHtml($_version = 'dashboard') {
+>>>>>>> parent of da7346f... bug fix
         $replace = $this->preToHtml($_version);
-
         if (!is_array($replace)) {
             return $replace;
         }
         $version = jeedom::versionAlias($_version);
-        $type = ($this->getConfiguration("bmw_type")!="")?$this->getConfiguration("bmw_type"):TYPE_ELECTRIC;
+        $type = $this->getConfiguration('type');
+        $temperature = $this->getCmd(null, 'chargingStatus');
+        $replace['#chargingStatus#'] = is_object($temperature) ? $temperature->execCmd() : '';
+        $replace['#chargingStatusid#'] = is_object($temperature) ? $temperature->getId() : '';
 
-        $chargingStatus = $this->getCmd(null, 'chargingStatus');
-        $replace['#chargingStatus#'] = is_object($temperature) ? $chargingStatus->execCmd() : '';
-        //$replace['#chargingStatusid#'] = is_object($temperature) ? $temperature->getId() : '';
-        var_dump(getTemplate('core', $version, $type.'_car_info', 'BMWConnectedDrive'));
-        $html = template_replace($replace, getTemplate('core', $version, $type.'_car_info', 'BMWConnectedDrive'));
+        $html = template_replace($replace, getTemplate('core', $version, $type.'_car_info.html', 'BMWConnectedDrive'));
         cache::set('widgetHtml' . $_version . $this->getId(), $html, 0);
-        log::add('BMWConnectedDrive', 'debug', "Rendering:".$html);
-        //return $this->postToHtml($_version, template_replace($replace, getTemplate('core', $version, $templatename, 'geotrav')));
         return $html;
 
   }*

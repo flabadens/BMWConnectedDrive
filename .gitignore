@@ -1,0 +1,12 @@
+/3rdparty/config.json
+3rdparty/config.json
+/3rdparty/auth.json
+3rdparty/auth.json
+/core/config/devices/*
+core/config/devices/*
+
+### macOS ###
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
