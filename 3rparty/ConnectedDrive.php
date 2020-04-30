@@ -10,7 +10,7 @@ namespace net\bluewalk\connecteddrive;
 
 class ConnectedDrive
 {
-  //BMW URL
+  //BMW URLs - subject to change
   private $auth_url = 'https://customer.bmwgroup.com/gcdm/oauth/authenticate';
   private $api_url = 'https://b2vapi.bmwgroup.com/api/vehicle';
   private $config = [
@@ -189,7 +189,4 @@ class ConnectedDrive
     return json_decode($result->body);
   }
 
-  public function coucou(){
-    return true;
-  }
 }
