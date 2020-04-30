@@ -39,11 +39,38 @@ Il vous faudra renseigner 3 paramètres particuliers nécessairesà la connectio
 Commandes disponibles
 ===
 
+# Informations #
+## Global ##
+- Verrouillage (doorLockState)
+- Eclairage (lightsParking)
+- Kilométrage (mileage)
+- Unité de distance (unitOfLength)
+- Porte Conducteur Arrière (doorDriverRear)
+- Porte Passager Arrière (doorPassengerRear)
+- Porte Conducteur Avant (doorDriverFront)
+- Porte Passager Avant (doorPassengerFront)
+- Fenêtre Conducteur Avant (windowDriverFront)
+- Fenêtre Passager Avant (windowPassengerFront)
+- Dernière mise à jour (lastUpdate)
+
+## Electrique / Hybride ##
+- Etat de la charge (chargingStatus)
+- Etat de la prise (connectorStatus)
+- Km restant (électrique) (beRemainingRangeElectric)
+- Pourcentage restant (chargingLevelHv)
+
+## Thermique ##
+- Km restant (thermique) (beRemainingRangeFuelKm)
+- Carburant restant (remaining_fuel)
+
+# Commandes #
+- Rafraichir (refresh)
+
 Fonctionnalités à venir
 ===
-*- Ajout des messages
-*- Ajout des mesures d'Efficience
-*- Ajout d'intéraction avec la voiture
+- Ajout des messages
+- Ajout des mesures d'Efficience
+- Ajout d'intéraction avec la voiture
 
 Changelog
 ===
