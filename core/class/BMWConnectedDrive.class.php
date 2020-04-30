@@ -135,7 +135,7 @@ class BMWConnectedDrive extends eqLogic {
     $info = $this->getCmd(null, 'doorLockState');
     if (!is_object($info)) {
      $info = new BMWConnectedDriveCmd();
-     $info->setName(__('Serrure', __FILE__));
+     $info->setName(__('Verouillage', __FILE__));
     }
     $info->setLogicalId('doorLockState');
     $info->setEqLogic_id($this->getId());
