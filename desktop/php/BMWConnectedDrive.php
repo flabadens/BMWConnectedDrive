@@ -104,7 +104,7 @@ foreach (jeeObject::all() as $object) {
      <div class="form-group">
         <label class="col-sm-3 control-label" >{{ Type de véhicule }}</label>
         <div class="col-sm-3">
-            <select class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="type ">
+            <select class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="bmw_type ">
                 <option value="electric">{{Electrique}}</option>
                 <option value="hybrid">{{Hybride}}</option>
                 <option value="thermal">{{Thermique}}</option>
