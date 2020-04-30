@@ -135,7 +135,7 @@ class BMWConnectedDrive extends eqLogic {
     $info = $this->getCmd(null, 'doorLockState');
     if (!is_object($info)) {
      $info = new BMWConnectedDriveCmd();
-     $info->setName(__('Verouillage', __FILE__));
+     $info->setName(__('Verrouillage', __FILE__));
     }
     $info->setLogicalId('doorLockState');
     $info->setEqLogic_id($this->getId());
@@ -324,16 +324,24 @@ class BMWConnectedDrive extends eqLogic {
     $refresh->save();
   }
 
-  /*public function toHtml($_version = 'dashboard') {
+  public function toHtml($_version = 'dashboard') {
         $replace = $this->preToHtml($_version);
         if (!is_array($replace)) {
             return $replace;
         }
         $version = jeedom::versionAlias($_version);
+        $type = $this->getConfiguration('type');
+        $temperature = $this->getCmd(null, 'chargingStatus');
+        $replace['#chargingStatus#'] = is_object($temperature) ? $temperature->execCmd() : '';
+        $replace['#chargingStatusid#'] = is_object($temperature) ? $temperature->getId() : '';
 
+        $html = template_replace($replace, getTemplate('core', $version, $type.'_car_info.html', 'BMWConnectedDrive'));
+        cache::set('widgetHtml' . $_version . $this->getId(), $html, 0);
+        return $html;
 
+  }
 
-
+        /*
         $temperature = $this->getCmd(null, 'temperature');
         $replace['#temperature#'] = is_object($temperature) ? $temperature->execCmd() : '';
         $replace['#tempid#'] = is_object($temperature) ? $temperature->getId() : '';
