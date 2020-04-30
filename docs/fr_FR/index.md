@@ -77,6 +77,7 @@ Fonctionnalités à venir
 
 Changelog
 ===
+En cours
 
 Support
 ===
