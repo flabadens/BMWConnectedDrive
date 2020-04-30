@@ -2,23 +2,16 @@
 
 require_once dirname(__FILE__).'/../../../../core/php/core.inc.php';
 require_once dirname(__FILE__).'/../../3rparty/ConnectedDrive.php';
+//include_file('3rdparty', 'ConnectedDrive', 'php', 'BMWConnectedDrive');
+
+define("TYPE_ELECTRIC", "electric");
+define("TYPE_HYBRID", "hybrid");
+define("TYPE_THERMAL", "thermal");
 
 class BMWConnectedDrive extends eqLogic {
 
   /*************** Attributs ***************/
-  /*private $bmwVin;
-  private $bmwUsername;
-  private $bmwPassword;
-  private $bmwToken;
-  private $bmwExpires;
 
-  public static function __construct (){
-    $this->bmwVin = '';
-    $this->bmwUsername='';
-    $this->bmwPassword='';
-    $this->bmwToken='';
-    $this->bmwExpires=0;
-  }*/
 
   /************* Static methods ************/
   public static function cron30($_eqLogic_id = null)
@@ -40,7 +33,8 @@ class BMWConnectedDrive extends eqLogic {
   }
 
   /**************** Methods ****************/
-  public function refreshCarInfos() {
+  public function getConnection(){
+
     $bmwVin = $this->getConfiguration("bmw_vin");
     $bmwUsername = $this->getConfiguration("bmw_username");
     $bmwPassword = $this->getConfiguration("bmw_password");
@@ -60,13 +54,19 @@ class BMWConnectedDrive extends eqLogic {
 			throw new Exception(__('500 - BMW Password missing', __FILE__));
 		}
 
-    log::add('BMWConnectedDrive', 'debug', 'Refresh car vin:'.$bmwVin.' with username:'.$bmwUsername);
+    log::add('BMWConnectedDrive', 'debug', 'Connection car vin:'.$bmwVin.' with username:'.$bmwUsername);
     $bmwConnection = new \net\bluewalk\connecteddrive\ConnectedDrive($bmwVin, $bmwUsername, $bmwPassword);
 
+    return $bmwConnection;
+  }
+
+  public function refreshCarInfos() {
+
+    $bmwConnection= $this->getConnection();
     $bmwCarInfo = $bmwConnection->getInfo();
+    log::add('BMWConnectedDrive', 'debug', "car->getInfo".serialize($bmwCarInfo));
 
     // On récupère les informations de BMWConnectedDrive
-
     $this->checkAndUpdateCmd('beRemainingRangeElectric', $bmwCarInfo->attributesMap->beRemainingRangeElectric);
     $this->checkAndUpdateCmd('chargingLevelHv', $bmwCarInfo->attributesMap->chargingLevelHv);
     $this->checkAndUpdateCmd('chargingStatus', $bmwCarInfo->attributesMap->charging_status);
@@ -81,15 +81,31 @@ class BMWConnectedDrive extends eqLogic {
     $this->checkAndUpdateCmd('doorPassengerFront', $bmwCarInfo->attributesMap->door_passenger_front);
     $this->checkAndUpdateCmd('windowDriverFront', $bmwCarInfo->attributesMap->window_driver_front);
     $this->checkAndUpdateCmd('windowPassengerFront', $bmwCarInfo->attributesMap->window_passenger_front);
-    $this->checkAndUpdateCmd('chargingStatus', $bmwCarInfo->attributesMap->charging_status);
+    $this->checkAndUpdateCmd('beRemainingRangeFuelKm', $bmwCarInfo->attributesMap->beRemainingRangeFuelKm);
+    $this->checkAndUpdateCmd('remaining_fuel', $bmwCarInfo->attributesMap->remaining_fuel);
     $this->checkAndUpdateCmd('lastUpdate', date('d/m/Y H:i:s'));
 
     log::add('BMWConnectedDrive', 'debug', 'End of car refresh vin:'.$bmwVin.' with username:'.$bmwUsername);
+
+    return $bmwCarInfo;
+  }
+
+  public function refreshCarNavigationInfo (){
+    $bmwConnection= $this->getConnection();
+    $bmwCarNavigationInfo = $bmwConnection->getNavigationInfo();
+    log::add('BMWConnectedDrive', 'debug', "car->getInfo".serialize($bmwCarNavigationInfo));
+    return $bmwCarNavigationInfo;
+  }
+
+  public function refreshCarEfficiency(){
+    $bmwConnection= $this->getConnection();
+    $bmwCarEfficiency= $bmwConnection->getEfficiency();
+    log::add('BMWConnectedDrive', 'debug', "car->getInfo".serialize($bmwCarEfficiency));
+    return $bmwCarEfficiency;
   }
 
 
   public function postSave() {
-
 
     /* add of info : Etat de la charge */
     $info = $this->getCmd(null, 'chargingStatus');
@@ -167,7 +183,7 @@ class BMWConnectedDrive extends eqLogic {
     $info = $this->getCmd(null, 'beRemainingRangeElectric');
     if (!is_object($info)) {
      $info = new BMWConnectedDriveCmd();
-     $info->setName(__('Km restant', __FILE__));
+     $info->setName(__('Km restant (électrique)', __FILE__));
     }
     $info->setLogicalId('beRemainingRangeElectric');
     $info->setEqLogic_id($this->getId());
@@ -271,6 +287,30 @@ class BMWConnectedDrive extends eqLogic {
     $info->setSubType('string');
     $info->save();
 
+    /* add of info : Fenetre Passager Avant */
+    $info = $this->getCmd(null, 'beRemainingRangeFuelKm');
+    if (!is_object($info)) {
+     $info = new BMWConnectedDriveCmd();
+     $info->setName(__('Km restant (thermique)', __FILE__));
+    }
+    $info->setLogicalId('beRemainingRangeFuelKm');
+    $info->setEqLogic_id($this->getId());
+    $info->setType('info');
+    $info->setSubType('string');
+    $info->save();
+
+    /* add of info : Fenetre Passager Avant */
+    $info = $this->getCmd(null, 'remaining_fuel');
+    if (!is_object($info)) {
+     $info = new BMWConnectedDriveCmd();
+     $info->setName(__('Carburant restant', __FILE__));
+    }
+    $info->setLogicalId('remaining_fuel');
+    $info->setEqLogic_id($this->getId());
+    $info->setType('info');
+    $info->setSubType('string');
+    $info->save();
+
     /* add of cmd : Refresh */
     $refresh = $this->getCmd(null, 'refresh');
     if (!is_object($refresh)) {
@@ -283,6 +323,79 @@ class BMWConnectedDrive extends eqLogic {
     $refresh->setSubType('other');
     $refresh->save();
   }
+
+  /*public function toHtml($_version = 'dashboard') {
+        $replace = $this->preToHtml($_version);
+        if (!is_array($replace)) {
+            return $replace;
+        }
+        $version = jeedom::versionAlias($_version);
+
+
+
+
+        $temperature = $this->getCmd(null, 'temperature');
+        $replace['#temperature#'] = is_object($temperature) ? $temperature->execCmd() : '';
+        $replace['#tempid#'] = is_object($temperature) ? $temperature->getId() : '';
+
+        $humidity = $this->getCmd(null, 'humidity');
+        $replace['#humidity#'] = is_object($humidity) ? $humidity->execCmd() : '';
+
+        $pressure = $this->getCmd(null, 'pressure');
+        $replace['#pressure#'] = is_object($pressure) ? $pressure->execCmd() : '';
+        $replace['#pressureid#'] = is_object($pressure) ? $pressure->getId() : '';
+
+        $wind_speed = $this->getCmd(null, 'wind_speed');
+        $replace['#windspeed#'] = is_object($wind_speed) ? $wind_speed->execCmd() : '';
+        $replace['#windid#'] = is_object($wind_speed) ? $wind_speed->getId() : '';
+
+        $sunrise = $this->getCmd(null, 'sunrise');
+        $replace['#sunrise#'] = is_object($sunrise) ? $sunrise->execCmd() : '';
+        $replace['#sunid#'] = is_object($sunrise) ? $sunrise->getId() : '';
+        if (strlen($replace['#sunrise#']) == 3) {
+            $replace['#sunrise#'] = substr($replace['#sunrise#'], 0, 1) . ':' . substr($replace['#sunrise#'], 1, 2);
+        } else if (strlen($replace['#sunrise#']) == 4) {
+            $replace['#sunrise#'] = substr($replace['#sunrise#'], 0, 2) . ':' . substr($replace['#sunrise#'], 2, 2);
+        }
+
+        $sunset = $this->getCmd(null, 'sunset');
+        $replace['#sunset#'] = is_object($sunset) ? $sunset->execCmd() : '';
+        if (strlen($replace['#sunset#']) == 3) {
+            $replace['#sunset#'] = substr($replace['#sunset#'], 0, 1) . ':' . substr($replace['#sunset#'], 1, 2);
+        } else if (strlen($replace['#sunset#']) == 4) {
+            $replace['#sunset#'] = substr($replace['#sunset#'], 0, 2) . ':' . substr($replace['#sunset#'], 2, 2);
+        }
+
+        $wind_direction = $this->getCmd(null, 'wind_direction');
+        $replace['#wind_direction#'] = is_object($wind_direction) ? $wind_direction->execCmd() : 0;
+
+        $refresh = $this->getCmd(null, 'refresh');
+        $replace['#refresh_id#'] = is_object($refresh) ? $refresh->getId() : '';
+
+        $condition = $this->getCmd(null, 'condition_now');
+        $sunset_time = is_object($sunset) ? $sunset->execCmd() : null;
+        $sunrise_time = is_object($sunrise) ? $sunrise->execCmd() : null;
+        if (is_object($condition)) {
+            $replace['#icone#'] = self::getIconFromCondition($condition->execCmd(), $sunrise_time, $sunset_time);
+            $replace['#condition#'] = $condition->execCmd();
+            $replace['#conditionid#'] = $condition->getId();
+            $replace['#collectDate#'] = $condition->getCollectDate();
+        } else {
+            $replace['#icone#'] = '';
+            $replace['#condition#'] = '';
+            $replace['#collectDate#'] = '';
+        }
+        if ($this->getConfiguration('modeImage', 0) == 1) {
+            $replace['#visibilityIcon#'] = "none";
+            $replace['#visibilityImage#'] = "block";
+        } else {
+            $replace['#visibilityIcon#'] = "block";
+            $replace['#visibilityImage#'] = "none";
+        }
+        $html = template_replace($replace, getTemplate('core', $version, 'current', 'weather'));
+        cache::set('widgetHtml' . $_version . $this->getId(), $html, 0);
+        return $html;
+    }*/
 }
 
 class BMWConnectedDriveCmd extends cmd {

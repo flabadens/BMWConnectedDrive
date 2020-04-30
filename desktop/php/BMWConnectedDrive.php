@@ -113,6 +113,12 @@ foreach (jeeObject::all() as $object) {
             <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="bmw_password" placeholder="param1"/>
         </div>
      </div>
+     <div class="form-group">
+        <label class="col-lg-4 control-label">Sauvegarder l'équipement avant de tester</label>
+        <div class="col-lg-2">
+            <span class="col-lg-4"><a class="btn btn-sm btn-info" id="btn-test_connection"><i class="fas fa-magic"></i> {{Tester connexion}}</a></span>
+        </div>
+     </div>
 </fieldset>
 </form>
 </div>
@@ -135,3 +141,10 @@ foreach (jeeObject::all() as $object) {
 
 <?php include_file('desktop', 'BMWConnectedDrive', 'js', 'BMWConnectedDrive');?>
 <?php include_file('core', 'plugin.template', 'js');?>
+<script>
+//Connection test modal
+$('#btn-test_connection').on('click',function(){
+    $('#md_modal2').dialog({title: "{{Test de connexion avec BMW ConnectedDrive}}"});
+    $('#md_modal2').load('index.php?v=d&plugin=BMWConnectedDrive&modal=connection_test&eqLogicId='+<?php echo $eqLogic->getId(); ?>).dialog('open');
+ })
+</script>
