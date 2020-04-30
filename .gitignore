@@ -12,3 +12,4 @@ core/config/devices/*
 .LSOverride
 .DS_Store
 core/.DS_Store
+.DS_Store
