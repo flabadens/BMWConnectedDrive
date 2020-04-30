@@ -35,8 +35,9 @@ Il vous faudra renseigner 3 paramètres particuliers nécessairesà la connectio
 - VIN (Vehicle Identification Number) : Les 7 derniers caractères du numéro d'identification sont disponibles sur le site BMW ConnectedDrive. Le numéro complet que vous aurez besoin se trouve sur le certificat d'immatriculation (carte grise, champ E).
 - Username : identifiant pour accéder au site BMW ConnectedDrive
 - Password : Mot de passe pour accéder au site BMW ConnectedDrive
+Vous pouvez une fois l'équipement sauvegardé, tester la connexion avec BMW ConnectedDrive. Vous aurez un retour brut des données potentiellement récpérable que nous pourrons utiliser pour tester les véhicules BMW.
 
-Commandes disponibles
+Commandes disponibles pour le moment
 ===
 
 # Informations #
@@ -68,9 +69,11 @@ Commandes disponibles
 
 Fonctionnalités à venir
 ===
+- Ajout d'un widget
 - Ajout des messages
 - Ajout des mesures d'Efficience
 - Ajout d'intéraction avec la voiture
+
 
 Changelog
 ===
