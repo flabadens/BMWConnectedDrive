@@ -4,7 +4,6 @@
 A PHP Client for BMW Connected Drive API
 Origine: https://github.com/bluewalk/BMWConnecteDrive
 and modified by geqr (www.ma-maison-intelligente.fr)
-
 **/
 
 namespace net\bluewalk\connecteddrive;
@@ -49,8 +48,6 @@ class ConnectedDrive
     // Set token if exists
     if ($this->auth->token && $this->auth->expires > time())
       $headers[] = 'Authorization: Bearer ' . $this->auth->token;
-
-    //curl_setopt($ch, CURLOPT_PROXY, '127.0.0.1:4321');
 
     // Default CURL options
     curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
@@ -107,6 +104,7 @@ class ConnectedDrive
   }
 
   private function _loadConfig($vin, $username, $password) {
+    // working with config.json file
     //$this->config = json_decode(file_get_contents($config));
     $this->config = (object)[
       'vin' => $vin,
