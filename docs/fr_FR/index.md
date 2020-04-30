@@ -9,7 +9,7 @@ Description
 Plugin permettant de récupérer les informations des voitures BMW équipées des services ConnectedDrive.
 
 Voitures testées :
--I3
+- I3
 
 Si vous êtes propriétaires d'un autre véhicule et souhaitez tester le fonctionnement, n'hésitez pas à me contacter.
 
@@ -18,7 +18,7 @@ Vous pouvez retrouver d'autres tutoriels sur mon blog : [www.ma-maison-intellige
 Installation
 ===
 
-#Installation avec Github
+# Installation avec Github #
 Depuis mon [GitHub](https://github.com/flabadens/BMWConnectedDrive), cliquer sur cloner/téléchargez puis sélectionner le fichier .zip.
 Dans Jeedom, il vous faudra peut être activer les sources de type fichier dans la configuration. Vous pourrez ensuite ajoutez un plugin avec le type de source Fichier. L’ID logique du plugin doit être renseigné exactement BMWConnecteDrive. Puis cliquez sur le bouton "Envoyer un plugin" et sélectionnez le zip téléchargé précédemment.
 Cliquez sur "Enregistrer". Le plugin est maintenant installé.
@@ -40,8 +40,8 @@ Vous pouvez une fois l'équipement sauvegardé, tester la connexion avec BMW Con
 Commandes disponibles pour le moment
 ===
 
-# Informations #
-## Global ##
+### Informations ###
+#### Global ####
 - Verrouillage (doorLockState)
 - Eclairage (lightsParking)
 - Kilométrage (mileage)
@@ -54,17 +54,17 @@ Commandes disponibles pour le moment
 - Fenêtre Passager Avant (windowPassengerFront)
 - Dernière mise à jour (lastUpdate)
 
-## Electrique / Hybride ##
+#### Electrique / Hybride ####
 - Etat de la charge (chargingStatus)
 - Etat de la prise (connectorStatus)
 - Km restant (électrique) (beRemainingRangeElectric)
 - Pourcentage restant (chargingLevelHv)
 
-## Thermique ##
+#### Thermique ####
 - Km restant (thermique) (beRemainingRangeFuelKm)
 - Carburant restant (remaining_fuel)
 
-# Commandes #
+### Commandes ###
 - Rafraichir (refresh)
 
 Fonctionnalités à venir
