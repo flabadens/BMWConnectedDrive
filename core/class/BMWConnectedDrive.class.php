@@ -324,12 +324,10 @@ class BMWConnectedDrive extends eqLogic {
     $refresh->save();
   }
 
-<<<<<<< HEAD
+
   /*public function toHtml($_version = 'dashboard') {
         log::add('BMWConnectedDrive', 'debug', "Start rendering");
-=======
-  public function toHtml($_version = 'dashboard') {
->>>>>>> parent of da7346f... bug fix
+
         $replace = $this->preToHtml($_version);
         if (!is_array($replace)) {
             return $replace;
@@ -344,7 +342,7 @@ class BMWConnectedDrive extends eqLogic {
         cache::set('widgetHtml' . $_version . $this->getId(), $html, 0);
         return $html;
 
-  }*
+        }*
 
         /*
         $temperature = $this->getCmd(null, 'temperature');
