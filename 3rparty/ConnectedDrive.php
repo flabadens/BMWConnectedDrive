@@ -4,6 +4,15 @@
 A PHP Client for BMW Connected Drive API
 Origine: https://github.com/bluewalk/BMWConnecteDrive
 and modified by geqr (www.ma-maison-intelligente.fr)
+
+Currently available functions :
+- getInfo
+- getNavigationInfo
+- getRemoteServicesStatus
+- getEfficiency
+
+Functions to come :
+- actions on car
 **/
 
 namespace net\bluewalk\connecteddrive;
