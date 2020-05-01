@@ -6,7 +6,7 @@ La documentation officielle du plugin se trouve [ici](https://flabadens.github.i
 
 ## Thanks ##
 
-Merci à bluewalk pour la library PHP
+Merci à bluewalk pour la librairie PHP
 [https://github.com/bluewalk/BMWConnecteDrive](https://github.com/bluewalk/BMWConnecteDrive)
 
 ## Support ##
