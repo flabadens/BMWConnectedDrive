@@ -60,7 +60,7 @@ class ConnectedDrive
     $ch = curl_init();
 
     $headers = [];
-    var_dump($url);
+    
     // Set token if exists
     if ($this->auth->token && $this->auth->expires > time())
       $headers[] = 'Authorization: Bearer ' . $this->auth->token;
