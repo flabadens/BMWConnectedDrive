@@ -151,10 +151,3 @@ foreach (jeeObject::all() as $object) {
 
 <?php include_file('desktop', 'BMWConnectedDrive', 'js', 'BMWConnectedDrive');?>
 <?php include_file('core', 'plugin.template', 'js');?>
-<script>
-//Connection test modal
-$('#btn-test_connection').on('click',function(){
-    $('#md_modal2').dialog({title: "{{Test de connexion avec BMW ConnectedDrive}}"});
-    $('#md_modal2').load('index.php?v=d&plugin=BMWConnectedDrive&modal=connection_test&eqLogicId='+<?php echo $eqLogic->getId(); ?>).dialog('open');
- })
-</script>
