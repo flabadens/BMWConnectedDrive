@@ -55,3 +55,9 @@ function addCmdToTable(_cmd) {
     }
     jeedom.cmd.changeType($('#table_cmd tbody tr:last'), init(_cmd.subType));
 }
+
+    // Connection test modal
+$('#btn-test_connection').on('click', function() {
+  $('#md_modal').dialog({title: "{{Test de connexion avec BMW Connected Drive}}"});
+	$('#md_modal').load('index.php?v=d&plugin=BMWConnectedDrive&modal=connection_test&eqLogicId='+ $('.eqLogicAttr[data-l1key=id]').value()).dialog('open');
+});
