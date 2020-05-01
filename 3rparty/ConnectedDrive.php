@@ -33,7 +33,7 @@ class ConnectedDrive
   private static $REMOTESERVICES_STATUS = '/remoteservices/v1/%s/state/execution';
   private static $NAVIGATION_INFO = '/navigation/v1/%s';
   private static $EFFICIENCY = '/efficiency/v1/%s';
-  private static $SERVICES = '/vehicle/remoteservices/v1/%s/'
+  private static $SERVICES = '/vehicle/remoteservices/v1/%s/';
   private static $REMOTE_DOOR_LOCK= 'RDL';
   private static $REMOTE_DOOR_UNLOCK= 'RDU';
   private static $REMOTE_HORN_BLOW = "RHB";
