@@ -42,27 +42,29 @@ Commandes disponibles pour le moment
 
 ### Informations ###
 #### Global ####
-- Verrouillage (doorLockState)
-- Eclairage (lightsParking)
-- Kilométrage (mileage)
-- Unité de distance (unitOfLength)
-- Porte Conducteur Arrière (doorDriverRear)
-- Porte Passager Arrière (doorPassengerRear)
-- Porte Conducteur Avant (doorDriverFront)
-- Porte Passager Avant (doorPassengerFront)
-- Fenêtre Conducteur Avant (windowDriverFront)
-- Fenêtre Passager Avant (windowPassengerFront)
-- Dernière mise à jour (lastUpdate)
+- Verrouillage (doorLockState) : string
+- Eclairage (lightsParking) : string
+- Kilométrage (mileage) : numeric
+- Unité de distance (unitOfLength) : string
+- Messages du véhicule (vehicleMessages) : json
+- Porte Conducteur Arrière (doorDriverRear) : string
+- Porte Passager Arrière (doorPassengerRear) : string
+- Porte Conducteur Avant (doorDriverFront) : string
+- Porte Passager Avant (doorPassengerFront) : string
+- Fenêtre Conducteur Avant (windowDriverFront) : string
+- Fenêtre Passager Avant (windowPassengerFront) : string
+- Coffre (trunk_state) : string
+- Dernière mise à jour (lastUpdate) : string
 
 #### Electrique / Hybride ####
-- Etat de la charge (chargingStatus)
-- Etat de la prise (connectorStatus)
-- Km restant (électrique) (beRemainingRangeElectric)
-- Pourcentage restant (chargingLevelHv)
+- Etat de la charge (chargingStatus) : string
+- Etat de la prise (connectorStatus) : string
+- Km restant (électrique) (beRemainingRangeElectric) : numeric
+- Pourcentage restant (chargingLevelHv) : numeric
 
 #### Thermique ####
 - Km restant (thermique) (beRemainingRangeFuelKm)
-- Carburant restant (remaining_fuel)
+- Carburant restant (remaining_fuel) : numeric
 
 ### Commandes ###
 - Rafraichir (refresh)
@@ -70,7 +72,6 @@ Commandes disponibles pour le moment
 Fonctionnalités à venir
 ===
 - Ajout d'un widget
-- Ajout des messages
 - Ajout des mesures d'Efficience
 - Ajout d'intéraction avec la voiture
 
