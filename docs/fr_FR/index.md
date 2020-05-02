@@ -40,8 +40,8 @@ Il vous faudra renseigner 3 paramètres nécessaires au plugin et à la connecti
 Commandes disponibles pour le moment
 ===
 
-### Informations ###
-## Global ##
+## Informations ##
+### Global ###
 - Verrouillage (doorLockState) : string
 - Eclairage (lightsParking) : string
 - Kilométrage (mileage) : numeric
@@ -56,17 +56,17 @@ Commandes disponibles pour le moment
 - Coffre (trunk_state) : string
 - Dernière mise à jour (lastUpdate) : string
 
-#### Electrique / Hybride ####
+### Electrique / Hybride ###
 - Etat de la charge (chargingStatus) : string
 - Etat de la prise (connectorStatus) : string
 - Km restant (électrique) (beRemainingRangeElectric) : numeric
 - Pourcentage restant (chargingLevelHv) : numeric
 
-#### Thermique ####
+### Thermique ###
 - Km restant (thermique) (beRemainingRangeFuelKm)
 - Carburant restant (remaining_fuel) : numeric
 
-### Commandes ###
+## Commandes ##
 - Rafraichir (refresh)
 
 Fonctionnalités à venir
