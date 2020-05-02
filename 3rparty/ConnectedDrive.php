@@ -15,8 +15,6 @@ Functions to come :
 - actions on car
 **/
 
-namespace net\bluewalk\connecteddrive;
-
 class ConnectedDrive
 {
   //BMW URLs - subject to change
@@ -60,7 +58,7 @@ class ConnectedDrive
     $ch = curl_init();
 
     $headers = [];
-    
+
     // Set token if exists
     if ($this->auth->token && $this->auth->expires > time())
       $headers[] = 'Authorization: Bearer ' . $this->auth->token;
@@ -78,8 +76,8 @@ class ConnectedDrive
 
     // Set POST/PUT data
     if ($method == 'POST' || $method == 'PUT') {
-      if (!$data)
-        throw new Exception('No data provided for POST/PUT methods');
+      /*if (!$data)
+        throw new Exception('No data provided for POST/PUT methods');*/
 
       if ($this->auth->expires < time()) {
         $data_str = http_build_query($data);
@@ -200,6 +198,52 @@ class ConnectedDrive
     $this->_checkAuth();
 
     $result = $this->_request($this->api_url . sprintf($this::$EFFICIENCY, $this->config->vin));
+
+    return json_decode($result->body);
+  }
+
+  public function doLightFlash ()
+  {
+    $this->_checkAuth();
+
+    $result = $this->_request($this->api_url . sprintf($this::$SERVICES, $this->config->vin) . $this::$REMOTE_LIGHT_FLASH, 'POST', null, []);
+
+    return json_decode($result->body);
+  }
+
+  public function doClimateNow ()
+  {
+    $this->_checkAuth();
+
+    $result = $this->_request($this->api_url . sprintf($this::$SERVICES, $this->config->vin) . $this::$REMOTE_CLIMATE_NOW, 'POST', null, []);
+
+    return json_decode($result->body);
+  }
+
+  public function doDoorLock ()
+  {
+    $this->_checkAuth();
+
+    $result = $this->_request($this->api_url . sprintf($this::$SERVICES, $this->config->vin) . $this::$REMOTE_DOOR_LOCK, 'POST', null, []);
+
+    return json_decode($result->body);
+  }
+
+  public function doDoorUnlock ()
+  {
+    $this->_checkAuth();
+
+    $result = $this->_request($this->api_url . sprintf($this::$SERVICES, $this->config->vin) . $this::$REMOTE_DOOR_UNLOCK, 'POST', null, []);
+
+    return json_decode($result->body);
+  }
+
+  public function doHornBlow ()
+  {
+    $this->_checkAuth();
+
+    var_dump($this->api_url . sprintf($this::$SERVICES, $this->config->vin) . $this::$REMOTE_HORN_BLOW);
+    $result = $this->_request($this->api_url . sprintf($this::$SERVICES, $this->config->vin) . $this::$REMOTE_HORN_BLOW, 'POST', null, []);
 
     return json_decode($result->body);
   }

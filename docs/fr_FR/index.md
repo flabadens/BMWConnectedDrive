@@ -68,12 +68,18 @@ Commandes disponibles pour le moment
 
 ## Commandes ##
 - Rafraichir (refresh)
+- Verrouiller
+- Déverrouiller
+- Klaxonner
+- Appel de phares
+- Climatiser
 
 Fonctionnalités à venir
 ===
 - Ajout d'un widget
 - Ajout des mesures d'Efficience
 - Ajout d'intéraction avec la voiture
+- Envoi de message au véhicule
 
 
 Changelog

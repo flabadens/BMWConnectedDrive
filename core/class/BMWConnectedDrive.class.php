@@ -55,7 +55,7 @@ class BMWConnectedDrive extends eqLogic {
 		}
 
     log::add('BMWConnectedDrive', 'debug', 'Connection car vin:'.$bmwVin.' with username:'.$bmwUsername);
-    $bmwConnection = new \net\bluewalk\connecteddrive\ConnectedDrive($bmwVin, $bmwUsername, $bmwPassword);
+    $bmwConnection = new ConnectedDrive($bmwVin, $bmwUsername, $bmwPassword);
 
     return $bmwConnection;
   }
@@ -94,8 +94,6 @@ class BMWConnectedDrive extends eqLogic {
 
     $this->checkAndUpdateCmd('vehicleMessages', json_encode($table_messages));
 
-    var_dump(json_encode($table_messages));
-
     log::add('BMWConnectedDrive', 'debug', 'End of car refresh vin:'.$bmwVin.' with username:'.$bmwUsername);
 
     return $bmwCarInfo;
@@ -113,6 +111,36 @@ class BMWConnectedDrive extends eqLogic {
     $bmwCarEfficiency= $bmwConnection->getEfficiency();
     log::add('BMWConnectedDrive', 'debug', "car->getInfo".serialize($bmwCarEfficiency));
     return $bmwCarEfficiency;
+  }
+
+  public function doHornBlow(){
+    $bmwConnection= $this->getConnection();
+    $result = $bmwConnection->doHornBlow();
+    log::add('BMWConnectedDrive', 'debug', "car->doHornBlow :".$result);
+  }
+
+  public function doLightFlash(){
+    $bmwConnection= $this->getConnection();
+    $result = $bmwConnection->doLightFlash();
+    log::add('BMWConnectedDrive', 'debug', "car->doLightFlash :".$result);
+  }
+
+  public function doDoorLock(){
+    $bmwConnection= $this->getConnection();
+    $result = $bmwConnection->doDoorLock();
+    log::add('BMWConnectedDrive', 'debug', "car->doDoorLock :".$result);
+  }
+
+  public function doDoorUnlock(){
+    $bmwConnection= $this->getConnection();
+    $result = $bmwConnection->doDoorUnlock();
+    log::add('BMWConnectedDrive', 'debug', "car->doDoorUnlock :".$result);
+  }
+
+  public function doClimateNow(){
+    $bmwConnection= $this->getConnection();
+    $result = $bmwConnection->doClimateNow();
+    log::add('BMWConnectedDrive', 'debug', "car->doClimateNow :".$result);
   }
 
 
@@ -190,7 +218,7 @@ class BMWConnectedDrive extends eqLogic {
     $info->setSubType('string');
     $info->save();
 
-    /* add of info : Unité de distance */
+    /* add of info : Messages du véhicule */
     $info = $this->getCmd(null, 'vehicleMessages');
     if (!is_object($info)) {
      $info = new BMWConnectedDriveCmd();
@@ -347,17 +375,77 @@ class BMWConnectedDrive extends eqLogic {
     $info->setSubType('string');
     $info->save();
 
-    /* add of cmd : Refresh */
-    $refresh = $this->getCmd(null, 'refresh');
-    if (!is_object($refresh)) {
-     $refresh = new BMWConnectedDriveCmd();
-     $refresh->setName(__('Rafraichir', __FILE__));
+    /* add of cmd : Rafraichir */
+    $cmd = $this->getCmd(null, 'refresh');
+    if (!is_object($cmd)) {
+     $cmd = new BMWConnectedDriveCmd();
+     $cmd->setName(__('Rafraichir', __FILE__));
     }
-    $refresh->setEqLogic_id($this->getId());
-    $refresh->setLogicalId('refresh');
-    $refresh->setType('action');
-    $refresh->setSubType('other');
-    $refresh->save();
+    $cmd->setEqLogic_id($this->getId());
+    $cmd->setLogicalId('refresh');
+    $cmd->setType('action');
+    $cmd->setSubType('other');
+    $cmd->save();
+
+    /* add of cmd : Climatisation */
+    $cmd = $this->getCmd(null, 'climateNow');
+    if (!is_object($cmd)) {
+     $cmd = new BMWConnectedDriveCmd();
+     $cmd->setName(__('Climatiser', __FILE__));
+    }
+    $cmd->setEqLogic_id($this->getId());
+    $cmd->setLogicalId('climateNow');
+    $cmd->setType('action');
+    $cmd->setSubType('other');
+    $cmd->save();
+
+    /* add of cmd : Verrouillage */
+    $cmd = $this->getCmd(null, 'doorLock');
+    if (!is_object($cmd)) {
+     $cmd = new BMWConnectedDriveCmd();
+     $cmd->setName(__('Verrouiller', __FILE__));
+    }
+    $cmd->setEqLogic_id($this->getId());
+    $cmd->setLogicalId('doorLock');
+    $cmd->setType('action');
+    $cmd->setSubType('other');
+    $cmd->save();
+
+    /* add of cmd : Déverrouillage */
+    $cmd = $this->getCmd(null, 'doorUnlock');
+    if (!is_object($cmd)) {
+     $cmd = new BMWConnectedDriveCmd();
+     $cmd->setName(__('Déverrouiller', __FILE__));
+    }
+    $cmd->setEqLogic_id($this->getId());
+    $cmd->setLogicalId('doorUnlock');
+    $cmd->setType('action');
+    $cmd->setSubType('other');
+    $cmd->save();
+
+    /* add of cmd : Feux */
+    $cmd = $this->getCmd(null, 'lightFlash');
+    if (!is_object($cmd)) {
+     $cmd = new BMWConnectedDriveCmd();
+     $cmd->setName(__('Appel de phares', __FILE__));
+    }
+    $cmd->setEqLogic_id($this->getId());
+    $cmd->setLogicalId('lightFlash');
+    $cmd->setType('action');
+    $cmd->setSubType('other');
+    $cmd->save();
+
+    /* add of cmd : Déverrouillage */
+    $cmd = $this->getCmd(null, 'hornBlow');
+    if (!is_object($cmd)) {
+     $cmd = new BMWConnectedDriveCmd();
+     $cmd->setName(__('Klaxonner', __FILE__));
+    }
+    $cmd->setEqLogic_id($this->getId());
+    $cmd->setLogicalId('hornBlow');
+    $cmd->setType('action');
+    $cmd->setSubType('other');
+    $cmd->save();
   }
 
 
@@ -459,14 +547,34 @@ class BMWConnectedDriveCmd extends cmd {
 
 
   public function execute($_options = array()) {
-    log::add('BMWConnectedDrive', 'debug', 'Exécution d\'une commande sur ' . $this->getLogicalId());
+    log::add('BMWConnectedDrive', 'debug', 'Exécution commande ' . $this->getLogicalId());
     $eqLogic = $this->getEqLogic();
 
-		switch ($this->getLogicalId()) {
-			case 'refresh':
-			$eqLogic->refreshCarInfos();
-			break;
-		}
+    try {
+  		switch ($this->getLogicalId()) {
+  			case 'refresh':
+  			$eqLogic->refreshCarInfos();
+  			break;
+        case 'hornBlow':
+  			$eqLogic->doHornBlow();
+  			break;
+        case 'lightFlash':
+        $eqLogic->doLightFlash();
+        break;
+        case 'doorLock':
+        $eqLogic->doDoorLock();
+        break;
+        case 'doorUnlock':
+        $eqLogic->doDoorUnlock();
+        break;
+        case 'climateNow':
+        $eqLogic->doClimateNow();
+        break;
+  		}
+    } catch (Exception $e) {
+        echo 'Exception reçue : ',  $e->getMessage(), "\n";
+        log::add('BMWConnectedDrive', 'debug', 'Erreur exécution commande ' . $this->getLogicalId() . ' - ' . $e->getMessage());
+    }
 	}
 
   /********** Getters and setters **********/
