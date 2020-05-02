@@ -41,7 +41,7 @@ Commandes disponibles pour le moment
 ===
 
 ### Informations ###
-#### Global ####
+## Global ##
 - Verrouillage (doorLockState) : string
 - Eclairage (lightsParking) : string
 - Kilométrage (mileage) : numeric
