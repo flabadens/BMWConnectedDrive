@@ -21,7 +21,7 @@ Installation
 # Installation depuis un dépôt GitHub #
 - Vous pouvez télécharger le plugin au format zip depuis le dépot [GitHub](https://github.com/flabadens/BMWConnectedDrive).
 - Au préalable, dans la configuration Jeedom, il vous faudra peut être activer les sources de type fichier.
-- Vous pourrez ensuite ajoutez un plugin avec le type de source Fichier. L’ID logique du plugin doit être renseigné exactement comme suit : BMWConnecteDrive.
+- Vous pourrez ensuite ajoutez un plugin avec le type de source Fichier. L’ID logique du plugin doit être renseigné exactement comme suit : BMWConnectedDrive.
 - Puis cliquez sur le bouton "Envoyer un plugin" et sélectionnez le zip téléchargé précédemment depuis GitHub.
 - Cliquez sur "Enregistrer". Le plugin est maintenant installé.
 
