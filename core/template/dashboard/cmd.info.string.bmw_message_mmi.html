@@ -1,0 +1,30 @@
+<div class="cmd cmd-widget #history#" data-type="info" data-subtype="numeric" data-template="line" data-cmd_id="#id#" data-cmd_uid="#uid#" data-version="#version#" data-eqLogic_id="#eqLogic_id#">
+  <!--<div class="content-xs">
+    <span class="cmdName #hide_name#">#name_display# </span> <strong class="stateTxt"></strong>(<strong class="state"></strong>)
+    <span class="stateImg"></span>
+    <span class="stateDate"></span>
+  </div>-->
+  <span class="cmdName #hide_name#">#name_display# <span class="badge"></span></span>
+  <ul class="list-group table_message">
+  </ul>
+
+  <script>
+    jeedom.cmd.update['#id#'] = function(_options) {
+			var cmd = $('.cmd[data-cmd_id=#id#]');
+      console.log(_options.display_value);
+      var messages = jQuery.parseJSON(_options.display_value);
+      var table_html= "";
+      //cmd.find('.stateImg').empty().append(Simg);
+      //cmd.find('.stateTxt').empty().append(' Indego : '+Stxt);
+      console.log(messages);
+      cmd.find('.badge').text('('+Object.keys(messages).length+')');
+
+      jQuery.each(messages,function(key,message){
+        table_html += '<li class="list-group-item"><span class="label label-default">'+message.date+'</span>'+message.title+'<br/>'+message.description+'</li>'
+      });
+
+      cmd.find('.table_message').html(table_html);
+    }
+    jeedom.cmd.update['#id#']({display_value:'#state#',valueDate:'#valueDate#',collectDate:'#collectDate#',alertLevel:'#alertLevel#'});
+  </script>
+</div>

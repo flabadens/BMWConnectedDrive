@@ -80,10 +80,21 @@ class BMWConnectedDrive extends eqLogic {
     $this->checkAndUpdateCmd('doorPassengerRear', $bmwCarInfo->attributesMap->door_passenger_rear);
     $this->checkAndUpdateCmd('doorPassengerFront', $bmwCarInfo->attributesMap->door_passenger_front);
     $this->checkAndUpdateCmd('windowDriverFront', $bmwCarInfo->attributesMap->window_driver_front);
+    $this->checkAndUpdateCmd('trunk_state', $bmwCarInfo->attributesMap->trunk_state);
     $this->checkAndUpdateCmd('windowPassengerFront', $bmwCarInfo->attributesMap->window_passenger_front);
     $this->checkAndUpdateCmd('beRemainingRangeFuelKm', $bmwCarInfo->attributesMap->beRemainingRangeFuelKm);
     $this->checkAndUpdateCmd('remaining_fuel', $bmwCarInfo->attributesMap->remaining_fuel);
     $this->checkAndUpdateCmd('lastUpdate', date('d/m/Y H:i:s'));
+
+    $messages = $bmwCarInfo->vehicleMessages->cbsMessages;
+    $table_messages = array();
+    foreach ($messages as $message) {
+      $table_messages[] = array( "title" => $message->text, "description" => $message->description, "date" => $message->date);
+    }
+
+    $this->checkAndUpdateCmd('vehicleMessages', json_encode($table_messages));
+
+    var_dump(json_encode($table_messages));
 
     log::add('BMWConnectedDrive', 'debug', 'End of car refresh vin:'.$bmwVin.' with username:'.$bmwUsername);
 
@@ -174,6 +185,19 @@ class BMWConnectedDrive extends eqLogic {
      $info->setName(__('Unité de distance', __FILE__));
     }
     $info->setLogicalId('unitOfLength');
+    $info->setEqLogic_id($this->getId());
+    $info->setType('info');
+    $info->setSubType('string');
+    $info->save();
+
+    /* add of info : Unité de distance */
+    $info = $this->getCmd(null, 'vehicleMessages');
+    if (!is_object($info)) {
+     $info = new BMWConnectedDriveCmd();
+     $info->setName(__('Messages', __FILE__));
+    }
+    $info->setTemplate("dashboard",'bmw_message_mmi');
+    $info->setLogicalId('vehicleMessages');
     $info->setEqLogic_id($this->getId());
     $info->setType('info');
     $info->setSubType('string');
@@ -287,6 +311,18 @@ class BMWConnectedDrive extends eqLogic {
     $info->setSubType('string');
     $info->save();
 
+    /* add of info : Coffre */
+    $info = $this->getCmd(null, 'trunk_state');
+    if (!is_object($info)) {
+     $info = new BMWConnectedDriveCmd();
+     $info->setName(__('Coffre', __FILE__));
+    }
+    $info->setLogicalId('trunk_state');
+    $info->setEqLogic_id($this->getId());
+    $info->setType('info');
+    $info->setSubType('string');
+    $info->save();
+
     /* add of info : Fenetre Passager Avant */
     $info = $this->getCmd(null, 'beRemainingRangeFuelKm');
     if (!is_object($info)) {
@@ -326,23 +362,27 @@ class BMWConnectedDrive extends eqLogic {
 
 
   /*public function toHtml($_version = 'dashboard') {
-        log::add('BMWConnectedDrive', 'debug', "Start rendering");
+    log::add('BMWConnectedDrive', 'debug', "Start rendering");
 
-        $replace = $this->preToHtml($_version);
-        if (!is_array($replace)) {
-            return $replace;
-        }
-        $version = jeedom::versionAlias($_version);
-        $type = $this->getConfiguration('type');
-        $temperature = $this->getCmd(null, 'chargingStatus');
-        $replace['#chargingStatus#'] = is_object($temperature) ? $temperature->execCmd() : '';
-        $replace['#chargingStatusid#'] = is_object($temperature) ? $temperature->getId() : '';
+    $replace = $this->preToHtml($_version);
+		if (!is_array($replace)) {
+			return $replace;
+		}
+		$version = jeedom::versionAlias($_version);
 
-        $html = template_replace($replace, getTemplate('core', $version, $type.'_car_info.html', 'BMWConnectedDrive'));
-        cache::set('widgetHtml' . $_version . $this->getId(), $html, 0);
-        return $html;
+    $type = ($this->getConfiguration("type") !='') ? $this->getConfiguration("type") : TYPE_ELECTRIC;
+    log::add('BMWConnectedDrive', 'debug', "Car type".$this->getConfiguration("type"));
+    $chargingLevelHv = $this->getCmd(null, 'chargingLevelHv');
+    $replace['#chargingLevelHv#'] = is_object($chargingLevelHv) ? $chargingLevelHv->execCmd() : '';
+    $replace['#chargingLevelHvid#'] = is_object($chargingLevelHv) ? $chargingLevelHv->getId() : '';
 
-        }*
+
+    $html = template_replace($replace, getTemplate('core', $version, $type.'_car_info', 'BMWConnectedDrive'));
+    log::add('BMWConnectedDrive', 'debug', "Rendering".$html);
+    cache::set('widgetHtml' . $_version . $this->getId(), $html, 0);
+    return $this->postToHtml($_version, $html);
+
+    }
 
         /*
         $temperature = $this->getCmd(null, 'temperature');
