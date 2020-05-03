@@ -33,9 +33,9 @@ Configuration
 - Vous pourrez ensuite ajouter un véhicule.
 Il vous faudra renseigner 3 paramètres nécessaires au plugin et à la connection avec le service BMW ConnectedDrive:
   - VIN (Vehicle Identification Number) : Seulement les 7 derniers caractères du numéro d'identification sont disponibles sur le site BMW ConnectedDrive comme ci-dessous.
-  <br/><center><img src="../assets/images/ecran_website.PNG" width="30%" height="30%"></center><br/>
+  <br/><br/><center><img src="../assets/images/ecran_website.png" width="30%" height="30%"></center><br/>
   Le numéro complet que vous aurez besoin ici se trouve sur le certificat d'immatriculation (carte grise, champ E) ou sur votre application mobile / infos.
-  <br/><center><img src="../assets/images/ecran_ios.PNG" width="30%" height="30%"></center><br/>
+  <br/><br/><center><img src="../assets/images/ecran_ios.PNG" width="30%" height="30%"></center><br/>
   - Username : identifiant pour accéder au site BMW ConnectedDrive
   - Password : Mot de passe pour accéder au site BMW ConnectedDrive
 - Vous pouvez une fois l'équipement sauvegardé, tester la connexion avec BMW ConnectedDrive. Vous aurez un retour brut des données potentiellement récupérables que nous pourrons utiliser pour tester les nouveaux véhicules BMW.
@@ -56,7 +56,12 @@ Commandes disponibles pour le moment
 - Porte Passager Avant (doorPassengerFront) : string
 - Fenêtre Conducteur Avant (windowDriverFront) : string
 - Fenêtre Passager Avant (windowPassengerFront) : string
+- Fenêtre Conducteur Arrière (windowDriverRear) : string
+- Fenêtre Passager Arrière (windowPassengerRear) : string
+- Capot (hood_state) : string
 - Coffre (trunk_state) : string
+- GPS Latitude (gps_lat) : string
+- GPS Longitude (gps_lng) : string
 - Dernière mise à jour (lastUpdate) : string
 
 ### Electrique / Hybride ###

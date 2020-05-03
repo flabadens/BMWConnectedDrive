@@ -80,10 +80,15 @@ class BMWConnectedDrive extends eqLogic {
     $this->checkAndUpdateCmd('doorPassengerRear', $bmwCarInfo->attributesMap->door_passenger_rear);
     $this->checkAndUpdateCmd('doorPassengerFront', $bmwCarInfo->attributesMap->door_passenger_front);
     $this->checkAndUpdateCmd('windowDriverFront', $bmwCarInfo->attributesMap->window_driver_front);
-    $this->checkAndUpdateCmd('trunk_state', $bmwCarInfo->attributesMap->trunk_state);
+    $this->checkAndUpdateCmd('windowDriverRear', $bmwCarInfo->attributesMap->window_driver_rear);
     $this->checkAndUpdateCmd('windowPassengerFront', $bmwCarInfo->attributesMap->window_passenger_front);
+    $this->checkAndUpdateCmd('windowPassengerRear', $bmwCarInfo->attributesMap->window_passenger_rear);
+    $this->checkAndUpdateCmd('trunk_state', $bmwCarInfo->attributesMap->trunk_state);
     $this->checkAndUpdateCmd('beRemainingRangeFuelKm', $bmwCarInfo->attributesMap->beRemainingRangeFuelKm);
     $this->checkAndUpdateCmd('remaining_fuel', $bmwCarInfo->attributesMap->remaining_fuel);
+    $this->checkAndUpdateCmd('gps_lat', $bmwCarInfo->attributesMap->gps_lat);
+    $this->checkAndUpdateCmd('gps_lng', $bmwCarInfo->attributesMap->gps_lng);
+    $this->checkAndUpdateCmd('hood_state', $bmwCarInfo->attributesMap->hood_state);
     $this->checkAndUpdateCmd('lastUpdate', date('d/m/Y H:i:s'));
 
     $messages = $bmwCarInfo->vehicleMessages->cbsMessages;
@@ -339,6 +344,30 @@ class BMWConnectedDrive extends eqLogic {
     $info->setSubType('string');
     $info->save();
 
+    /* add of info : Fenetre Conducteur Arrière*/
+    $info = $this->getCmd(null, 'windowDriverRear');
+    if (!is_object($info)) {
+     $info = new BMWConnectedDriveCmd();
+     $info->setName(__('Fenêtre Conducteur Arrière', __FILE__));
+    }
+    $info->setLogicalId('windowDriverRear');
+    $info->setEqLogic_id($this->getId());
+    $info->setType('info');
+    $info->setSubType('string');
+    $info->save();
+
+    /* add of info : Fenetre Passager Arrière*/
+    $info = $this->getCmd(null, 'windowPassengerRear');
+    if (!is_object($info)) {
+     $info = new BMWConnectedDriveCmd();
+     $info->setName(__('Fenêtre Passager Arrière', __FILE__));
+    }
+    $info->setLogicalId('windowPassengerRear');
+    $info->setEqLogic_id($this->getId());
+    $info->setType('info');
+    $info->setSubType('string');
+    $info->save();
+
     /* add of info : Coffre */
     $info = $this->getCmd(null, 'trunk_state');
     if (!is_object($info)) {
@@ -446,6 +475,42 @@ class BMWConnectedDrive extends eqLogic {
     $cmd->setType('action');
     $cmd->setSubType('other');
     $cmd->save();
+
+    /* add of info : Latitude GPS */
+    $info = $this->getCmd(null, 'gps_lat');
+    if (!is_object($info)) {
+     $info = new BMWConnectedDriveCmd();
+     $info->setName(__('GPS Latitude', __FILE__));
+    }
+    $info->setLogicalId('gps_lat');
+    $info->setEqLogic_id($this->getId());
+    $info->setType('info');
+    $info->setSubType('string');
+    $info->save();
+
+    /* add of info : Longitude GPS */
+    $info = $this->getCmd(null, 'gps_lng');
+    if (!is_object($info)) {
+     $info = new BMWConnectedDriveCmd();
+     $info->setName(__('GPS Longitude', __FILE__));
+    }
+    $info->setLogicalId('gps_lng');
+    $info->setEqLogic_id($this->getId());
+    $info->setType('info');
+    $info->setSubType('string');
+    $info->save();
+
+    /* add of info : Capot Moteur*/
+    $info = $this->getCmd(null, 'hood_state');
+    if (!is_object($info)) {
+     $info = new BMWConnectedDriveCmd();
+     $info->setName(__('Capot Moteur', __FILE__));
+    }
+    $info->setLogicalId('hood_state');
+    $info->setEqLogic_id($this->getId());
+    $info->setType('info');
+    $info->setSubType('string');
+    $info->save();
   }
 
 
