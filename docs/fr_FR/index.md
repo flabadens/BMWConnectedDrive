@@ -33,7 +33,7 @@ Configuration
 - Vous pourrez ensuite ajouter un véhicule.
 Il vous faudra renseigner 3 paramètres nécessaires au plugin et à la connection avec le service BMW ConnectedDrive:
   - VIN (Vehicle Identification Number) : Seulement les 7 derniers caractères du numéro d'identification sont disponibles sur le site BMW ConnectedDrive. Le numéro complet que vous aurez besoin ici se trouve sur le certificat d'immatriculation (carte grise, champ E) ou sur votre application mobile / infos.
-  <img src="../assets/images/ecran_ios.PNG" width="48">
+  <img src="../assets/images/ecran_ios.PNG" width="50%" height="50%">
   - Username : identifiant pour accéder au site BMW ConnectedDrive
   - Password : Mot de passe pour accéder au site BMW ConnectedDrive
 - Vous pouvez une fois l'équipement sauvegardé, tester la connexion avec BMW ConnectedDrive. Vous aurez un retour brut des données potentiellement récupérables que nous pourrons utiliser pour tester les nouveaux véhicules BMW.
