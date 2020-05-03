@@ -35,7 +35,7 @@ class ConnectedDrive
   private static $REMOTE_DOOR_LOCK= 'RDL';
   private static $REMOTE_DOOR_UNLOCK= 'RDU';
   private static $REMOTE_HORN_BLOW = "RHB";
-  private static $REMOTE_LIGHT_FLASH = "RFL";
+  private static $REMOTE_LIGHT_FLASH = "RLF";
   private static $REMOTE_CLIMATE_NOW = "RCN";
 
   //public function  __construct($config = null) {
@@ -206,6 +206,7 @@ class ConnectedDrive
   {
     $this->_checkAuth();
 
+    var_dump($this->api_url . sprintf($this::$SERVICES, $this->config->vin) . $this::$REMOTE_LIGHT_FLASH);
     $result = $this->_request($this->api_url . sprintf($this::$SERVICES, $this->config->vin) . $this::$REMOTE_LIGHT_FLASH, 'POST', null, ['Accept: application/json']);
 
     return json_decode($result->body);
