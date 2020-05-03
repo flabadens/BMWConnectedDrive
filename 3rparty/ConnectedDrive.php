@@ -206,7 +206,7 @@ class ConnectedDrive
   {
     $this->_checkAuth();
 
-    $result = $this->_request($this->api_url . sprintf($this::$SERVICES, $this->config->vin) . $this::$REMOTE_LIGHT_FLASH, 'POST', null, []);
+    $result = $this->_request($this->api_url . sprintf($this::$SERVICES, $this->config->vin) . $this::$REMOTE_LIGHT_FLASH, 'POST', null, ['Accept: application/json']);
 
     return json_decode($result->body);
   }
@@ -215,7 +215,7 @@ class ConnectedDrive
   {
     $this->_checkAuth();
 
-    $result = $this->_request($this->api_url . sprintf($this::$SERVICES, $this->config->vin) . $this::$REMOTE_CLIMATE_NOW, 'POST', null, []);
+    $result = $this->_request($this->api_url . sprintf($this::$SERVICES, $this->config->vin) . $this::$REMOTE_CLIMATE_NOW, 'POST', null, ['Accept: application/json']);
 
     return json_decode($result->body);
   }
@@ -224,7 +224,7 @@ class ConnectedDrive
   {
     $this->_checkAuth();
 
-    $result = $this->_request($this->api_url . sprintf($this::$SERVICES, $this->config->vin) . $this::$REMOTE_DOOR_LOCK, 'POST', null, []);
+    $result = $this->_request($this->api_url . sprintf($this::$SERVICES, $this->config->vin) . $this::$REMOTE_DOOR_LOCK, 'POST', null, ['Accept: application/json']);
 
     return json_decode($result->body);
   }
@@ -233,7 +233,7 @@ class ConnectedDrive
   {
     $this->_checkAuth();
 
-    $result = $this->_request($this->api_url . sprintf($this::$SERVICES, $this->config->vin) . $this::$REMOTE_DOOR_UNLOCK, 'POST', null, []);
+    $result = $this->_request($this->api_url . sprintf($this::$SERVICES, $this->config->vin) . $this::$REMOTE_DOOR_UNLOCK, 'POST', null, ['Accept: application/json']);
 
     return json_decode($result->body);
   }
@@ -243,7 +243,7 @@ class ConnectedDrive
     $this->_checkAuth();
 
     var_dump($this->api_url . sprintf($this::$SERVICES, $this->config->vin) . $this::$REMOTE_HORN_BLOW);
-    $result = $this->_request($this->api_url . sprintf($this::$SERVICES, $this->config->vin) . $this::$REMOTE_HORN_BLOW, 'POST', null, []);
+    $result = $this->_request($this->api_url . sprintf($this::$SERVICES, $this->config->vin) . $this::$REMOTE_HORN_BLOW, 'POST', null, ['Accept: application/json']);
 
     return json_decode($result->body);
   }
