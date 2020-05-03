@@ -106,6 +106,7 @@ class ConnectedDrive
 
     // Get response
     $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     $header = substr($response, 0, $header_size);
     $body = substr($response, $header_size);
 
@@ -113,7 +114,8 @@ class ConnectedDrive
 
     return (object)[
       'headers' => $header,
-      'body' => $body
+      'body' => $body,
+      'httpCode' => $http_code
     ];
   }
 
@@ -206,7 +208,6 @@ class ConnectedDrive
   {
     $this->_checkAuth();
 
-    var_dump($this->api_url . sprintf($this::$SERVICES, $this->config->vin) . $this::$REMOTE_LIGHT_FLASH);
     $result = $this->_request($this->api_url . sprintf($this::$SERVICES, $this->config->vin) . $this::$REMOTE_LIGHT_FLASH, 'POST', null, ['Accept: application/json']);
 
     return json_decode($result->body);
@@ -243,7 +244,6 @@ class ConnectedDrive
   {
     $this->_checkAuth();
 
-    //var_dump($this->api_url . sprintf($this::$SERVICES, $this->config->vin) . $this::$REMOTE_HORN_BLOW);
     $result = $this->_request($this->api_url . sprintf($this::$SERVICES, $this->config->vin) . $this::$REMOTE_HORN_BLOW, 'POST', null, ['Accept: application/json']);
 
     return json_decode($result->body);

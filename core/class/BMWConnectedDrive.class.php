@@ -94,7 +94,7 @@ class BMWConnectedDrive extends eqLogic {
 
     $this->checkAndUpdateCmd('vehicleMessages', json_encode($table_messages));
 
-    log::add('BMWConnectedDrive', 'debug', 'End of car refresh vin:'.$bmwVin.' with username:'.$bmwUsername);
+    log::add('BMWConnectedDrive', 'debug', 'End of car info refresh.');
 
     return $bmwCarInfo;
   }
@@ -116,31 +116,31 @@ class BMWConnectedDrive extends eqLogic {
   public function doHornBlow(){
     $bmwConnection= $this->getConnection();
     $result = $bmwConnection->doHornBlow();
-    log::add('BMWConnectedDrive', 'debug', "car->doHornBlow :".$result);
+    log::add('BMWConnectedDrive', 'debug', 'End of car event : '.$result->remoteServiceEvent->remoteServiceType.' - '.$result->remoteServiceEvent->remoteServiceStatus.' - '.$result->remoteServiceEvent->lastUpdate);
   }
 
   public function doLightFlash(){
     $bmwConnection= $this->getConnection();
     $result = $bmwConnection->doLightFlash();
-    log::add('BMWConnectedDrive', 'debug', "car->doLightFlash :".$result);
+    log::add('BMWConnectedDrive', 'debug', 'End of car event : '.$result->remoteServiceEvent->remoteServiceType.' - '.$result->remoteServiceEvent->remoteServiceStatus.' - '.$result->remoteServiceEvent->lastUpdate);
   }
 
   public function doDoorLock(){
     $bmwConnection= $this->getConnection();
     $result = $bmwConnection->doDoorLock();
-    log::add('BMWConnectedDrive', 'debug', "car->doDoorLock :".$result);
+    log::add('BMWConnectedDrive', 'debug', 'End of car event : '.$result->remoteServiceEvent->remoteServiceType.' - '.$result->remoteServiceEvent->remoteServiceStatus.' - '.$result->remoteServiceEvent->lastUpdate);
   }
 
   public function doDoorUnlock(){
     $bmwConnection= $this->getConnection();
     $result = $bmwConnection->doDoorUnlock();
-    log::add('BMWConnectedDrive', 'debug', "car->doDoorUnlock :".$result);
+    log::add('BMWConnectedDrive', 'debug', 'End of car event : '.$result->remoteServiceEvent->remoteServiceType.' - '.$result->remoteServiceEvent->remoteServiceStatus.' - '.$result->remoteServiceEvent->lastUpdate);
   }
 
   public function doClimateNow(){
     $bmwConnection= $this->getConnection();
     $result = $bmwConnection->doClimateNow();
-    log::add('BMWConnectedDrive', 'debug', "car->doClimateNow :".$result);
+    log::add('BMWConnectedDrive', 'debug', 'End of car event : '.$result->remoteServiceEvent->remoteServiceType.' - '.$result->remoteServiceEvent->remoteServiceStatus.' - '.$result->remoteServiceEvent->lastUpdate);
   }
 
 
