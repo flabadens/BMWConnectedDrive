@@ -24,7 +24,6 @@ if (!isConnect('admin')) {
 
 
 log::add('BMWConnectedDrive', 'debug', 'Test connection ' . $_GET["eqLogicId"]);
-echo $_GET["eqLogicId"];
 
 $plugin = plugin::byId('BMWConnectedDrive');
 sendVarToJS('eqType', $plugin->getId());
