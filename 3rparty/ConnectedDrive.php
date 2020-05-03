@@ -242,7 +242,7 @@ class ConnectedDrive
   {
     $this->_checkAuth();
 
-    var_dump($this->api_url . sprintf($this::$SERVICES, $this->config->vin) . $this::$REMOTE_HORN_BLOW);
+    //var_dump($this->api_url . sprintf($this::$SERVICES, $this->config->vin) . $this::$REMOTE_HORN_BLOW);
     $result = $this->_request($this->api_url . sprintf($this::$SERVICES, $this->config->vin) . $this::$REMOTE_HORN_BLOW, 'POST', null, ['Accept: application/json']);
 
     return json_decode($result->body);
