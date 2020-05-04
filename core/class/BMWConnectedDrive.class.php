@@ -101,7 +101,7 @@ class BMWConnectedDrive extends eqLogic {
 
     $this->checkAndUpdateCmd('vehicleMessages', json_encode($table_messages));
 
-    log::add('BMWConnectedDrive', 'debug', 'End of car info refresh.');
+    log::add('BMWConnectedDrive', 'debug', 'End of car info refresh : ' . $response->httpCode);
 
     return $bmwCarInfo;
   }
@@ -118,6 +118,13 @@ class BMWConnectedDrive extends eqLogic {
     $bmwCarEfficiency= $bmwConnection->getEfficiency();
     log::add('BMWConnectedDrive', 'debug', "car->getInfo".serialize($bmwCarEfficiency->body));
     return $bmwCarEfficiency;
+  }
+
+  public function getRemoteServicesStatus(){
+    $bmwConnection= $this->getConnection();
+    $bmwRemoteServicesStatus= $bmwConnection->getRemoteServicesStatus();
+    log::add('BMWConnectedDrive', 'debug', "car->getInfo".serialize($bmwRemoteServicesStatus->body));
+    return $bmwRemoteServicesStatus;
   }
 
   public function doHornBlow(){
@@ -523,7 +530,7 @@ class BMWConnectedDrive extends eqLogic {
     $cmd->save();
 
     /* add of cmd : MessageInfo */
-    /*$cmd = $this->getCmd(null, 'messageToBMW');
+    $cmd = $this->getCmd(null, 'messageToBMW');
     if (!is_object($cmd)) {
      $cmd = new BMWConnectedDriveCmd();
      $cmd->setName(__('Message à ma BMW', __FILE__));
@@ -532,7 +539,7 @@ class BMWConnectedDrive extends eqLogic {
     $cmd->setLogicalId('messageToBMW');
     $cmd->setType('action');
     $cmd->setSubType('message');
-    $cmd->save();*/
+    $cmd->save();
   }
 
 
