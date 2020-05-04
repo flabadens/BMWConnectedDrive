@@ -63,8 +63,10 @@ class BMWConnectedDrive extends eqLogic {
   public function refreshCarInfos() {
 
     $bmwConnection= $this->getConnection();
-    $bmwCarInfo = $bmwConnection->getInfo();
-    log::add('BMWConnectedDrive', 'debug', "car->getInfo".serialize($bmwCarInfo));
+    $response = $bmwConnection->getInfo();
+    $bmwCarInfo = $response->body;
+
+    log::add('BMWConnectedDrive', 'debug', "car->getInfo : ['.$result->httpCode.'] ".serialize($bmwCarInfo));
 
     // On récupère les informations de BMWConnectedDrive
     $this->checkAndUpdateCmd('beRemainingRangeElectric', $bmwCarInfo->attributesMap->beRemainingRangeElectric);
@@ -107,45 +109,53 @@ class BMWConnectedDrive extends eqLogic {
   public function refreshCarNavigationInfo (){
     $bmwConnection= $this->getConnection();
     $bmwCarNavigationInfo = $bmwConnection->getNavigationInfo();
-    log::add('BMWConnectedDrive', 'debug', "car->getInfo".serialize($bmwCarNavigationInfo));
+    log::add('BMWConnectedDrive', 'debug', "car->getInfo".serialize($bmwCarNavigationInfo->body));
     return $bmwCarNavigationInfo;
   }
 
   public function refreshCarEfficiency(){
     $bmwConnection= $this->getConnection();
     $bmwCarEfficiency= $bmwConnection->getEfficiency();
-    log::add('BMWConnectedDrive', 'debug', "car->getInfo".serialize($bmwCarEfficiency));
+    log::add('BMWConnectedDrive', 'debug', "car->getInfo".serialize($bmwCarEfficiency->body));
     return $bmwCarEfficiency;
   }
 
   public function doHornBlow(){
     $bmwConnection= $this->getConnection();
     $result = $bmwConnection->doHornBlow();
-    log::add('BMWConnectedDrive', 'debug', 'End of car event : '.$result->remoteServiceEvent->remoteServiceType.' - '.$result->remoteServiceEvent->remoteServiceStatus.' - '.$result->remoteServiceEvent->lastUpdate);
+    log::add('BMWConnectedDrive', 'debug', 'End of car event : ['.$result->httpCode.'] '.$result->body->remoteServiceEvent->remoteServiceType.' - '.$result->body->remoteServiceEvent->remoteServiceStatus.' - '.$result->body->remoteServiceEvent->lastUpdate);
   }
 
   public function doLightFlash(){
     $bmwConnection= $this->getConnection();
     $result = $bmwConnection->doLightFlash();
-    log::add('BMWConnectedDrive', 'debug', 'End of car event : '.$result->remoteServiceEvent->remoteServiceType.' - '.$result->remoteServiceEvent->remoteServiceStatus.' - '.$result->remoteServiceEvent->lastUpdate);
+    log::add('BMWConnectedDrive', 'debug', 'End of car event : ['.$result->httpCode.'] '.$result->body->remoteServiceEvent->remoteServiceType.' - '.$result->body->remoteServiceEvent->remoteServiceStatus.' - '.$result->body->remoteServiceEvent->lastUpdate);
   }
 
   public function doDoorLock(){
     $bmwConnection= $this->getConnection();
     $result = $bmwConnection->doDoorLock();
-    log::add('BMWConnectedDrive', 'debug', 'End of car event : '.$result->remoteServiceEvent->remoteServiceType.' - '.$result->remoteServiceEvent->remoteServiceStatus.' - '.$result->remoteServiceEvent->lastUpdate);
+    var_dump($result);
+    log::add('BMWConnectedDrive', 'debug', 'End of car event : ['.$result->httpCode.'] '.$result->body->remoteServiceEvent->remoteServiceType.' - '.$result->body->remoteServiceEvent->remoteServiceStatus.' - '.$result->body->remoteServiceEvent->lastUpdate);
   }
 
   public function doDoorUnlock(){
     $bmwConnection= $this->getConnection();
     $result = $bmwConnection->doDoorUnlock();
-    log::add('BMWConnectedDrive', 'debug', 'End of car event : '.$result->remoteServiceEvent->remoteServiceType.' - '.$result->remoteServiceEvent->remoteServiceStatus.' - '.$result->remoteServiceEvent->lastUpdate);
+    log::add('BMWConnectedDrive', 'debug', 'End of car event : ['.$result->httpCode.'] '.$result->body->remoteServiceEvent->remoteServiceType.' - '.$result->body->remoteServiceEvent->remoteServiceStatus.' - '.$result->body->remoteServiceEvent->lastUpdate);
   }
 
   public function doClimateNow(){
     $bmwConnection= $this->getConnection();
     $result = $bmwConnection->doClimateNow();
-    log::add('BMWConnectedDrive', 'debug', 'End of car event : '.$result->remoteServiceEvent->remoteServiceType.' - '.$result->remoteServiceEvent->remoteServiceStatus.' - '.$result->remoteServiceEvent->lastUpdate);
+    log::add('BMWConnectedDrive', 'debug', 'End of car event : ['.$result->httpCode.'] '.$result->body->remoteServiceEvent->remoteServiceType.' - '.$result->body->remoteServiceEvent->remoteServiceStatus.' - '.$result->body->remoteServiceEvent->lastUpdate);
+  }
+
+  public function doMessageToBMW($title, $message){
+    $bmwConnection= $this->getConnection();
+    log::add('BMWConnectedDrive', 'debug', 'Titre message : '.$title.' - Corps message : '.$message);
+    $result = $bmwConnection->doSendMessage($titre,$message);
+    log::add('BMWConnectedDrive', 'debug', 'End of car event : ['.$result->httpCode.']');
   }
 
 
@@ -404,6 +414,42 @@ class BMWConnectedDrive extends eqLogic {
     $info->setSubType('string');
     $info->save();
 
+    /* add of info : Latitude GPS */
+    $info = $this->getCmd(null, 'gps_lat');
+    if (!is_object($info)) {
+     $info = new BMWConnectedDriveCmd();
+     $info->setName(__('GPS Latitude', __FILE__));
+    }
+    $info->setLogicalId('gps_lat');
+    $info->setEqLogic_id($this->getId());
+    $info->setType('info');
+    $info->setSubType('string');
+    $info->save();
+
+    /* add of info : Longitude GPS */
+    $info = $this->getCmd(null, 'gps_lng');
+    if (!is_object($info)) {
+     $info = new BMWConnectedDriveCmd();
+     $info->setName(__('GPS Longitude', __FILE__));
+    }
+    $info->setLogicalId('gps_lng');
+    $info->setEqLogic_id($this->getId());
+    $info->setType('info');
+    $info->setSubType('string');
+    $info->save();
+
+    /* add of info : Capot Moteur*/
+    $info = $this->getCmd(null, 'hood_state');
+    if (!is_object($info)) {
+     $info = new BMWConnectedDriveCmd();
+     $info->setName(__('Capot Moteur', __FILE__));
+    }
+    $info->setLogicalId('hood_state');
+    $info->setEqLogic_id($this->getId());
+    $info->setType('info');
+    $info->setSubType('string');
+    $info->save();
+
     /* add of cmd : Rafraichir */
     $cmd = $this->getCmd(null, 'refresh');
     if (!is_object($cmd)) {
@@ -476,41 +522,17 @@ class BMWConnectedDrive extends eqLogic {
     $cmd->setSubType('other');
     $cmd->save();
 
-    /* add of info : Latitude GPS */
-    $info = $this->getCmd(null, 'gps_lat');
-    if (!is_object($info)) {
-     $info = new BMWConnectedDriveCmd();
-     $info->setName(__('GPS Latitude', __FILE__));
+    /* add of cmd : MessageInfo */
+    /*$cmd = $this->getCmd(null, 'messageToBMW');
+    if (!is_object($cmd)) {
+     $cmd = new BMWConnectedDriveCmd();
+     $cmd->setName(__('Message à ma BMW', __FILE__));
     }
-    $info->setLogicalId('gps_lat');
-    $info->setEqLogic_id($this->getId());
-    $info->setType('info');
-    $info->setSubType('string');
-    $info->save();
-
-    /* add of info : Longitude GPS */
-    $info = $this->getCmd(null, 'gps_lng');
-    if (!is_object($info)) {
-     $info = new BMWConnectedDriveCmd();
-     $info->setName(__('GPS Longitude', __FILE__));
-    }
-    $info->setLogicalId('gps_lng');
-    $info->setEqLogic_id($this->getId());
-    $info->setType('info');
-    $info->setSubType('string');
-    $info->save();
-
-    /* add of info : Capot Moteur*/
-    $info = $this->getCmd(null, 'hood_state');
-    if (!is_object($info)) {
-     $info = new BMWConnectedDriveCmd();
-     $info->setName(__('Capot Moteur', __FILE__));
-    }
-    $info->setLogicalId('hood_state');
-    $info->setEqLogic_id($this->getId());
-    $info->setType('info');
-    $info->setSubType('string');
-    $info->save();
+    $cmd->setEqLogic_id($this->getId());
+    $cmd->setLogicalId('messageToBMW');
+    $cmd->setType('action');
+    $cmd->setSubType('message');
+    $cmd->save();*/
   }
 
 
@@ -618,23 +640,29 @@ class BMWConnectedDriveCmd extends cmd {
     try {
   		switch ($this->getLogicalId()) {
   			case 'refresh':
-  			$eqLogic->refreshCarInfos();
-  			break;
+    			$eqLogic->refreshCarInfos();
+    			break;
         case 'hornBlow':
-  			$eqLogic->doHornBlow();
-  			break;
+    			$eqLogic->doHornBlow();
+    			break;
         case 'lightFlash':
-        $eqLogic->doLightFlash();
-        break;
+          $eqLogic->doLightFlash();
+          break;
         case 'doorLock':
-        $eqLogic->doDoorLock();
-        break;
+          $eqLogic->doDoorLock();
+          break;
         case 'doorUnlock':
-        $eqLogic->doDoorUnlock();
-        break;
+          $eqLogic->doDoorUnlock();
+          break;
         case 'climateNow':
-        $eqLogic->doClimateNow();
-        break;
+          $eqLogic->doClimateNow();
+          break;
+        case 'messageToBMW':
+          $eqLogic->doMessageToBMW($_options['title'], $_options['message']);
+          break;
+        default:
+          throw new \Exception("Commande inconnue", 1);
+          break;
   		}
     } catch (Exception $e) {
         echo 'Exception reçue : ',  $e->getMessage(), "\n";

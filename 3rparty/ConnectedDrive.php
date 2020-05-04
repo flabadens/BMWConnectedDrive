@@ -32,6 +32,7 @@ class ConnectedDrive
   private static $NAVIGATION_INFO = '/navigation/v1/%s';
   private static $EFFICIENCY = '/efficiency/v1/%s';
   private static $SERVICES = '/remoteservices/v1/%s/';
+  private static $MESSAGES = '/myinfo/v1';
   private static $REMOTE_DOOR_LOCK= 'RDL';
   private static $REMOTE_DOOR_UNLOCK= 'RDU';
   private static $REMOTE_HORN_BLOW = "RHB";
@@ -114,7 +115,7 @@ class ConnectedDrive
 
     return (object)[
       'headers' => $header,
-      'body' => $body,
+      'body' => json_decode($body),
       'httpCode' => $http_code
     ];
   }
@@ -176,7 +177,7 @@ class ConnectedDrive
 
     $this->_checkAuth();
     $result = $this->_request($this->api_url . sprintf($this::$VEHILCE_INFO, $this->config->vin));
-    return json_decode($result->body);
+    return $result;
   }
 
   public function getRemoteServicesStatus() {
@@ -184,7 +185,7 @@ class ConnectedDrive
 
     $result = $this->_request($this->api_url . sprintf($this::$REMOTESERVICES_STATUS, $this->config->vin), 'GET', null, ['Accept: application/json']);
 
-    return json_decode($result->body);
+    return $result;
   }
 
   public function getNavigationInfo() {
@@ -192,7 +193,7 @@ class ConnectedDrive
 
     $result = $this->_request($this->api_url . sprintf($this::$NAVIGATION_INFO, $this->config->vin));
 
-    return json_decode($result->body);
+    return $result;
   }
 
   public function getEfficiency()
@@ -201,7 +202,7 @@ class ConnectedDrive
 
     $result = $this->_request($this->api_url . sprintf($this::$EFFICIENCY, $this->config->vin));
 
-    return json_decode($result->body);
+    return $result;
   }
 
   public function doLightFlash ()
@@ -210,7 +211,7 @@ class ConnectedDrive
 
     $result = $this->_request($this->api_url . sprintf($this::$SERVICES, $this->config->vin) . $this::$REMOTE_LIGHT_FLASH, 'POST', null, ['Accept: application/json']);
 
-    return json_decode($result->body);
+    return $result;
   }
 
   public function doClimateNow ()
@@ -219,7 +220,7 @@ class ConnectedDrive
 
     $result = $this->_request($this->api_url . sprintf($this::$SERVICES, $this->config->vin) . $this::$REMOTE_CLIMATE_NOW, 'POST', null, ['Accept: application/json']);
 
-    return json_decode($result->body);
+    return $result;
   }
 
   public function doDoorLock ()
@@ -228,7 +229,7 @@ class ConnectedDrive
 
     $result = $this->_request($this->api_url . sprintf($this::$SERVICES, $this->config->vin) . $this::$REMOTE_DOOR_LOCK, 'POST', null, ['Accept: application/json']);
 
-    return json_decode($result->body);
+    return $result;
   }
 
   public function doDoorUnlock ()
@@ -237,7 +238,7 @@ class ConnectedDrive
 
     $result = $this->_request($this->api_url . sprintf($this::$SERVICES, $this->config->vin) . $this::$REMOTE_DOOR_UNLOCK, 'POST', null, ['Accept: application/json']);
 
-    return json_decode($result->body);
+    return $result;
   }
 
   public function doHornBlow ()
@@ -246,7 +247,16 @@ class ConnectedDrive
 
     $result = $this->_request($this->api_url . sprintf($this::$SERVICES, $this->config->vin) . $this::$REMOTE_HORN_BLOW, 'POST', null, ['Accept: application/json']);
 
-    return json_decode($result->body);
+    return $result;
+  }
+
+  public function doSendMessage ($title, $message)
+  {
+    $this->_checkAuth();
+
+    $result = $this->_request($this->api_url . $this::$MESSAGES, 'POST', ["vins"=>[$this->config->vin], "message" => $message, "subject" => $title], ['Accept: application/json']);
+
+    return $result;
   }
 
 }
