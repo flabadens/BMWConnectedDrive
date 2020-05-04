@@ -10,6 +10,11 @@ Plugin permettant de récupérer les informations des voitures BMW équipées de
 
 Voitures testées :
 - I3
+- Série 1 (F20)
+- Série 2 Active Tourer (F45)
+- Série 2 Gran Tourer (F46)
+- Série 3 330e
+- Série 4 gran coupé
 
 Si vous êtes propriétaires d'un autre véhicule BMW et souhaitez tester le fonctionnement, n'hésitez pas à me contacter.
 
