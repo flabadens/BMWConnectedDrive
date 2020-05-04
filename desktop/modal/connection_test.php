@@ -43,4 +43,9 @@ echo '<h1>GetEfficiency</h1>';
 echo '<pre>';
 var_dump($eqLogic->refreshCarEfficiency());
 echo '</pre>';
+echo '<hr/>';
+echo '<h1>GetRemoteServiceStatus</h1>';
+echo '<pre>';
+var_dump($eqLogic->getRemoteServicesStatus());
+echo '</pre>';
 ?>

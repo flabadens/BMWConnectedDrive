@@ -38,6 +38,17 @@ class ConnectedDrive
   private static $REMOTE_HORN_BLOW = "RHB";
   private static $REMOTE_LIGHT_FLASH = "RLF";
   private static $REMOTE_CLIMATE_NOW = "RCN";
+  private static $ERROR_CODE_MAPPING = [
+    200 => 'OK',
+    401 => 'UNAUTHORIZED',
+    404 => 'NOT_FOUND',
+    405 => 'MOBILE_ACCESS_DISABLED',
+    408 => 'VEHICLE_UNAVAILABLE',
+    423 => 'ACCOUNT_LOCKED',
+    429 => 'TOO_MANY_REQUESTS',
+    500 => 'SERVER_ERROR',
+    503 => 'SERVICE_MAINTENANCE',
+  ];
 
   //public function  __construct($config = null) {
   public function  __construct($vin, $username, $password) {
@@ -116,7 +127,7 @@ class ConnectedDrive
     return (object)[
       'headers' => $header,
       'body' => json_decode($body),
-      'httpCode' => $http_code
+      'httpCode' => $this->_convertHttpCode($http_code)
     ];
   }
 
@@ -171,6 +182,11 @@ class ConnectedDrive
 
     if ($this->auth->token && time() > $this->auth->expires)
       return $this->getToken();
+  }
+
+  private function _convertHttpCode($code){
+    var_dump($this::$ERROR_CODE_MAPPING);
+    return $code . " - " . $this::$ERROR_CODE_MAPPING[$code];
   }
 
   public function getInfo() {
