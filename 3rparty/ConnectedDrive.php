@@ -185,7 +185,6 @@ class ConnectedDrive
   }
 
   private function _convertHttpCode($code){
-    var_dump($this::$ERROR_CODE_MAPPING);
     return $code . " - " . $this::$ERROR_CODE_MAPPING[$code];
   }
 

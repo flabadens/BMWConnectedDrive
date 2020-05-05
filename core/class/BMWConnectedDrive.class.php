@@ -142,7 +142,6 @@ class BMWConnectedDrive extends eqLogic {
   public function doDoorLock(){
     $bmwConnection= $this->getConnection();
     $result = $bmwConnection->doDoorLock();
-    var_dump($result);
     log::add('BMWConnectedDrive', 'debug', 'End of car event : ['.$result->httpCode.'] '.$result->body->remoteServiceEvent->remoteServiceType.' - '.$result->body->remoteServiceEvent->remoteServiceStatus.' - '.$result->body->remoteServiceEvent->lastUpdate);
   }
 
