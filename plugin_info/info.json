@@ -8,7 +8,7 @@
   "hasDependency": false,
   "hasOwnDaemon": false,
   "maxDependancyInstallTime": 0,
-  "documentation": "https://flabadens.github.io/BMWConnectedDrive/fr_FR/",
-  "changelog": "https://flabadens.github.io/BMWConnectedDrive/fr_FR/changelog.md",
+  "documentation": "https://flabadens.github.io/BMWConnectedDrive/#language#/",
+  "changelog": "https://flabadens.github.io/BMWConnectedDrive/#language#/changelog.md",
   "author": "geqr"
 }

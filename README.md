@@ -2,7 +2,7 @@
 
 ## Documentation ##
 
-La documentation officielle du plugin se trouve [ici](https://flabadens.github.io/BMWConnectedDrive/fr_FR/)
+La documentation officielle du plugin se trouve [ici](http://ma-maison-intelligente.fr/2020/11/plugin-jeedom-bmw-connecteddrive/)
 
 ## Thanks ##
 
@@ -11,7 +11,7 @@ Merci à bluewalk pour la librairie PHP
 
 Merci aux contributeurs et testeurs:
 - [jpty](https://github.com/jpty)
-- [choupfamily63](https://community.jeedom.com/u/choupfamily63/summary)
+- [choupfamily63](https://community.jeedom.com/u/choupfamily63)
 - [artpol](https://community.jeedom.com/u/artpol)
 
 ## Support ##
